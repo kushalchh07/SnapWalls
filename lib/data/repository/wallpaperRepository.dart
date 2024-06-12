@@ -14,7 +14,7 @@ class WallpaperRepository {
           await http.get(Uri.parse('https://api.pexels.com/v1/curated'));
       var val = jsonDecode(response.body);
       // log(response.body);
-      // log(data);
+      // log(val);
     } catch (e) {
       print(e);
       rethrow;
