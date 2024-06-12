@@ -1,10 +1,3 @@
-import 'dart:convert';
-
-WallpaperModel wallpaperModelFromJson(String str) =>
-    WallpaperModel.fromMap(json.decode(str));
-
-String wallpaperModelToJson(WallpaperModel data) => json.encode(data.toMap());
-
 class WallpaperModel {
   int page;
   int perPage;
@@ -18,21 +11,25 @@ class WallpaperModel {
     required this.nextPage,
   });
 
-  factory WallpaperModel.fromMap(Map<String, dynamic> json) => WallpaperModel(
-        page: json["page"] ?? 0,
-        perPage: json["per_page"] ?? 0,
-        photos: json["photos"] != null
-            ? List<Photo>.from(json["photos"].map((x) => Photo.fromJson(x)))
-            : [],
-        nextPage: json["next_page"] ?? '',
-      );
+  factory WallpaperModel.fromJson(Map<String, dynamic> json) {
+    return WallpaperModel(
+      page: json["page"] ?? 0,
+      perPage: json["per_page"] ?? 0,
+      photos: json["photos"] != null
+          ? List<Photo>.from(json["photos"].map((x) => Photo.fromJson(x)))
+          : [],
+      nextPage: json["next_page"] ?? '',
+    );
+  }
 
-  Map<String, dynamic> toMap() => {
-        "page": page,
-        "per_page": perPage,
-        "photos": List<dynamic>.from(photos.map((x) => x.toMap())),
-        "next_page": nextPage,
-      };
+  Map<String, dynamic> toJson() {
+    return {
+      "page": page,
+      "per_page": perPage,
+      "photos": List<dynamic>.from(photos.map((x) => x.toJson())),
+      "next_page": nextPage,
+    };
+  }
 }
 
 class Photo {
@@ -62,33 +59,37 @@ class Photo {
     required this.alt,
   });
 
-  factory Photo.fromJson(Map<String, dynamic> json) => Photo(
-        id: json["id"] ?? 0,
-        width: json["width"] ?? 0,
-        height: json["height"] ?? 0,
-        url: json["url"] ?? '',
-        photographer: json["photographer"] ?? 'Unknown',
-        photographerUrl: json["photographer_url"] ?? '',
-        photographerId: json["photographer_id"] ?? 0,
-        avgColor: json["avg_color"] ?? '',
-        src: json["src"] != null ? Src.fromJson(json["src"]) : Src.defaultSrc(),
-        liked: json["liked"] ?? false,
-        alt: json["alt"] ?? '',
-      );
+  factory Photo.fromJson(Map<String, dynamic> json) {
+    return Photo(
+      id: json["id"] ?? 0,
+      width: json["width"] ?? 0,
+      height: json["height"] ?? 0,
+      url: json["url"] ?? '',
+      photographer: json["photographer"] ?? '',
+      photographerUrl: json["photographer_url"] ?? '',
+      photographerId: json["photographer_id"] ?? 0,
+      avgColor: json["avg_color"] ?? '',
+      src: Src.fromJson(json["src"] ?? {}),
+      liked: json["liked"] ?? false,
+      alt: json["alt"] ?? '',
+    );
+  }
 
-  Map<String, dynamic> toMap() => {
-        "id": id,
-        "width": width,
-        "height": height,
-        "url": url,
-        "photographer": photographer,
-        "photographer_url": photographerUrl,
-        "photographer_id": photographerId,
-        "avg_color": avgColor,
-        "src": src.toMap(),
-        "liked": liked,
-        "alt": alt,
-      };
+  Map<String, dynamic> toJson() {
+    return {
+      "id": id,
+      "width": width,
+      "height": height,
+      "url": url,
+      "photographer": photographer,
+      "photographer_url": photographerUrl,
+      "photographer_id": photographerId,
+      "avg_color": avgColor,
+      "src": src.toJson(),
+      "liked": liked,
+      "alt": alt,
+    };
+  }
 }
 
 class Src {
@@ -112,36 +113,29 @@ class Src {
     required this.tiny,
   });
 
-  factory Src.fromJson(Map<String, dynamic> json) => Src(
-        original: json["original"] ?? '',
-        large2X: json["large2x"] ?? '',
-        large: json["large"] ?? '',
-        medium: json["medium"] ?? '',
-        small: json["small"] ?? '',
-        portrait: json["portrait"] ?? '',
-        landscape: json["landscape"] ?? '',
-        tiny: json["tiny"] ?? '',
-      );
+  factory Src.fromJson(Map<String, dynamic> json) {
+    return Src(
+      original: json["original"] ?? '',
+      large2X: json["large2x"] ?? '',
+      large: json["large"] ?? '',
+      medium: json["medium"] ?? '',
+      small: json["small"] ?? '',
+      portrait: json["portrait"] ?? '',
+      landscape: json["landscape"] ?? '',
+      tiny: json["tiny"] ?? '',
+    );
+  }
 
-  factory Src.defaultSrc() => Src(
-        original: '',
-        large2X: '',
-        large: '',
-        medium: '',
-        small: '',
-        portrait: '',
-        landscape: '',
-        tiny: '',
-      );
-
-  Map<String, dynamic> toMap() => {
-        "original": original,
-        "large2x": large2X,
-        "large": large,
-        "medium": medium,
-        "small": small,
-        "portrait": portrait,
-        "landscape": landscape,
-        "tiny": tiny,
-      };
+  Map<String, dynamic> toJson() {
+    return {
+      "original": original,
+      "large2x": large2X,
+      "large": large,
+      "medium": medium,
+      "small": small,
+      "portrait": portrait,
+      "landscape": landscape,
+      "tiny": tiny,
+    };
+  }
 }

@@ -13,16 +13,15 @@ part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc() : super(HomeInitial()) {
-    WallpaperRepository wallpaperRepository = WallpaperRepository();
     on<HomeInitialEvent>(_homeInitialEvent);
   }
 
   FutureOr<void> _homeInitialEvent(
       HomeInitialEvent event, Emitter<HomeState> emit) async {
     var client = http.Client();
-    List<WallpaperModel> wallpapers = [];
+    List<Photo> wallpapers = [];
     try {
-      emit(HomeLoadingState());
+      // emit(HomeLoadingState());
 
       var response = await client
           .get(Uri.parse('https://api.pexels.com/v1/curated'), headers: {
@@ -30,20 +29,18 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             'ub1jVSB2BzOMVBpEnRCObkK3sE7YQ7tDvWNxxy1Wb5uSjgCPdVi3GwK2'
       });
 
+      // final List<dynamic> data = jsonDecode(response.body)['photos'];
+      // final List<WallpaperModel> images =
+      //     data.map((json) => WallpaperModel.fromJson(json)).toList();
       var jsonResponse = jsonDecode(response.body) as Map<String, dynamic>;
-      List result = jsonResponse['photos'] as List;
+        WallpaperModel wallpaperModel = WallpaperModel.fromJson(jsonResponse);
 
-      for (int i = 0; i < result.length; i++) {
-        WallpaperModel wallpaper =
-            WallpaperModel.fromMap(result[i] as Map<String, dynamic>);
-        wallpapers.add(wallpaper);
-      }
-
-      log(wallpapers.toString());
-      emit(HomeLoadedState(wallpapers: wallpapers));
+      emit(HomeLoadedState(images: wallpaperModel.photos));
+      // log(response.body);
     } catch (e) {
       print(e);
-      rethrow;
+      log(e.toString());
+      // rethrow;
     } finally {
       client.close();
     }

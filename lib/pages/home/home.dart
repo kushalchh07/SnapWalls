@@ -1,4 +1,11 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+
+import 'dart:developer';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wallpaper_app/data/models/wallpaper_model.dart';
 import 'package:wallpaper_app/logic/Bloc/homeBloc/home_bloc.dart';
 
 class HomePage extends StatefulWidget {
@@ -18,6 +25,68 @@ class _HomePageState extends State<HomePage> {
   final HomeBloc homeBloc = HomeBloc();
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      body: BlocConsumer<HomeBloc, HomeState>(
+        bloc: homeBloc,
+        listener: (context, state) {},
+        builder: (context, state) {
+          if (state is HomeLoadingState) {
+            log('home loading state ');
+
+            return Center(
+              child: SizedBox(
+                height: 50,
+                width: 50,
+                child: CupertinoActivityIndicator(),
+              ),
+            );
+          }
+          if (state is HomeLoadedState) {
+            log('home loaded state ');
+            final successState = state as HomeLoadedState;
+            
+
+            return Scaffold(
+              appBar: AppBar(
+                title: Text("Wallpapers"),
+                centerTitle: true,
+              ),
+              body: GridView.builder(
+                  itemCount: 1,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      crossAxisSpacing: 2,
+                      childAspectRatio: 2 / 3,
+                      mainAxisSpacing: 2),
+                  itemBuilder: (context, index) {
+                   
+                   log('${state.images[0].src.tiny}');
+                    // log('${state.images[0].photos![index].src!}');
+
+                    // final WallpaperModel image = state.images[index].photos[0].src.tiny
+                    return Card(
+                      child: Column(
+                        children: [
+                          // Image.network(tinyUrl), // Display the tiny image
+                          // Text(photo.photographer), // Display the photographer's name
+                        ],
+                      ),
+                    );
+                  }),
+            );
+          }
+          if (state is HomeErrorState) {
+            log('home error ');
+
+            return Scaffold(
+              body: Center(
+                child: Text("Error"),
+              ),
+            );
+          }
+          return Container();
+        },
+      ),
+    );
   }
 }
