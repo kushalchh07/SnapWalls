@@ -28,7 +28,7 @@ class _FullScreenState extends State<FullScreen> {
                   onPressed: () {},
                   child: Text(
                     'Set WallPaper',
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: Colors.black),
                   )),
             )
           ],
