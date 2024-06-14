@@ -3,5 +3,9 @@ part of 'fullscreen_bloc.dart';
 @immutable
 abstract class FullscreenEvent {}
 
+class SetWallPaperEvent extends FullscreenEvent {
+  final String imageUrl;
 
-class SetWallPaperEvent extends FullscreenEvent {} //SetWallPaperEven
+  SetWallPaperEvent({required this.imageUrl});
+
+} //SetWallPaperEven

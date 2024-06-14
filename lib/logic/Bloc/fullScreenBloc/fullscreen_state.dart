@@ -1,9 +1,12 @@
 part of 'fullscreen_bloc.dart';
 
 @immutable
-sealed class FullscreenState {}
+abstract class FullscreenState {}
+ class FullscreenInitial extends FullscreenState {}
+ class FullscreenLoadedState extends FullscreenState {
+  final String imageUrl;
 
-final class FullscreenInitial extends FullscreenState {}
-final class FullscreenLoadedState extends FullscreenState {}
-final class FullscreenLoadingState extends FullscreenState {}
-final class FullscreenErrorState extends FullscreenState {}
+  FullscreenLoadedState({required this.imageUrl, required List images});
+ }
+ class FullscreenLoadingState extends FullscreenState {}
+ class FullscreenErrorState extends FullscreenState {}
