@@ -17,7 +17,8 @@ class FullscreenLoadedState extends FullscreenState {
 class FullscreenLoadingState extends FullscreenState {}
 
 class FullscreenErrorState extends FullscreenState {
-
   final String errorMessage;
   FullscreenErrorState({required this.errorMessage});
 }
+
+class SetWallPaperState extends FullscreenState {}

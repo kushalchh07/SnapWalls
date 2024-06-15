@@ -82,16 +82,14 @@ part 'home_state.dart';
 //     }
 //   }
 // }
-
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc() : super(HomeInitial()) {
     on<HomeInitialEvent>(_homeInitialEvent);
     on<LoadMoreEvent>(_loadMoreEvent);
-    // on<LoadFullScreenEvent>(_loadFullScreenEvent);
   }
 
   final String apiKey =
-      'ub1jVSB2BzOMVBpEnRCObkK3sE7YQ7tDvWNxxy1Wb5uSjgCPdVi3GwK2'; // Replace with your actual API key
+      'ub1jVSB2BzOMVBpEnRCObkK3sE7YQ7tDvWNxxy1Wb5uSjgCPdVi3GwK2'; 
   int page = 1;
 
   FutureOr<void> _homeInitialEvent(
@@ -126,6 +124,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         currentImages.addAll(wallpaperModel.photos);
 
         emit(HomeLoadedState(images: currentImages));
+        page++;
       } else {
         emit(HomeErrorState(errorMessage: 'Failed to fetch wallpapers'));
       }
@@ -138,6 +137,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   // FutureOr<void> _loadFullScreenEvent(
   //     LoadFullScreenEvent event, Emitter<HomeState> emit) {
- 
+
   // }
 }

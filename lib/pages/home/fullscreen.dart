@@ -76,6 +76,14 @@ class _FullScreenState extends State<FullScreen> {
                           onPressed: () {
                             fullscreenBloc.add(
                                 SetWallPaperEvent(imageUrl: widget.imageUrl));
+                            if (state is SetWallPaperState) {
+                              //showing dialog box when wallpaper is set
+                              Get.snackbar(
+                                'Wallpaper Set',
+                                'Wallpaper Set Successfully',
+                                snackPosition: SnackPosition.BOTTOM,
+                              );
+                            }
                           },
                           child: Text(
                             'Set WallPaper',

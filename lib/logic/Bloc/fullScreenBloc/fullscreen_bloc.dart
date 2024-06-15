@@ -62,9 +62,8 @@ class FullscreenBloc extends Bloc<FullscreenEvent, FullscreenState> {
       if (result == null) {
         throw Exception('Result is null');
       }
-      // emit(FullscreenLoadedState(
-      //   imageUrl: event.imageUrl,
-      // ));
+
+      emit(SetWallPaperState());
     } catch (e) {
       emit(FullscreenErrorState(errorMessage: e.toString()));
     }
