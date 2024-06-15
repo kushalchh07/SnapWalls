@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 import 'package:wallpaper_app/logic/Bloc/fullScreenBloc/fullscreen_bloc.dart';
 
 class FullScreen extends StatefulWidget {
@@ -25,6 +27,22 @@ class _FullScreenState extends State<FullScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+          title: Text(
+            "Wallpapers",
+            style: TextStyle(color: Colors.white),
+          ),
+          centerTitle: true,
+          backgroundColor: Colors.purple,
+          leading: IconButton(
+            onPressed: () {
+              Get.back();
+            },
+            icon: Icon(
+              Icons.arrow_back,
+              color: Colors.white,
+            ),
+          )),
       body: BlocConsumer<FullscreenBloc, FullscreenState>(
         bloc: fullscreenBloc,
         listener: (context, state) {
@@ -55,7 +73,10 @@ class _FullScreenState extends State<FullScreen> {
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.purple),
-                          onPressed: () {},
+                          onPressed: () {
+                            fullscreenBloc.add(
+                                SetWallPaperEvent(imageUrl: widget.imageUrl));
+                          },
                           child: Text(
                             'Set WallPaper',
                             style: TextStyle(color: Colors.white),
