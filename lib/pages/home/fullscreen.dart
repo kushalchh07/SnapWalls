@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
@@ -46,7 +48,45 @@ class _FullScreenState extends State<FullScreen> {
       body: BlocConsumer<FullscreenBloc, FullscreenState>(
         bloc: fullscreenBloc,
         listener: (context, state) {
-          // TODO: implement listener
+          if (state is SetWallPaperState) {
+            CupertinoActivityIndicator();
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('Wallpaper Set',
+                      style: TextStyle(
+                          fontFamily: 'inter',
+                          color: Colors.blue,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold)),
+                  content: Text('The wallpaper has been set successfully.',
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontFamily: 'inter',
+                          fontWeight: FontWeight.bold)),
+                  backgroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  actions: [
+                    TextButton(
+                      child: Text('OK',
+                          style: TextStyle(
+                              color: Colors.blue,
+                              fontFamily: 'inter',
+                              fontWeight: FontWeight.bold)),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        Get.back(); // Navigate back to the previous screen
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
+          }
         },
         builder: (context, state) {
           if (state is FullscreenLoadingState) {
@@ -76,18 +116,16 @@ class _FullScreenState extends State<FullScreen> {
                           onPressed: () {
                             fullscreenBloc.add(
                                 SetWallPaperEvent(imageUrl: widget.imageUrl));
-                            if (state is SetWallPaperState) {
-                              //showing dialog box when wallpaper is set
-                              Get.snackbar(
-                                'Wallpaper Set',
-                                'Wallpaper Set Successfully',
-                                snackPosition: SnackPosition.BOTTOM,
-                              );
-                            }
+                            // if (state is SetWallPaperState) {
+                            //   //showing dialog box when wallpaper is set
+                            // }
                           },
                           child: Text(
                             'Set WallPaper',
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'inter',
+                                fontSize: 20),
                           )),
                     ),
                   )
