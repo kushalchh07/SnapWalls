@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter_cache_manager/file.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_wallpaper_manager/flutter_wallpaper_manager.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -24,26 +25,48 @@ class FullscreenBloc extends Bloc<FullscreenEvent, FullscreenState> {
       Get.to(() => FullScreen(
             imageUrl: event.imageUrl,
           ));
-     
     } catch (e) {
       print(e);
     }
-     emit(FullscreenLoadedState(
-          // images: [],
-          imageUrl: '',
-          ));
+    emit(FullscreenLoadedState(
+      // images: [],
+      imageUrl: '',
+    ));
   }
 
-  Future<FutureOr<void>> _setWallPaperEvent(
-      SetWallPaperEvent event, Emitter<FullscreenState> emit) async {
-    // try {
-    //   int location = WallpaperManager.HOME_SCREEN;
-    //   var file = DefaultCacheManager().getSingleFile(event.imageUrl);
+  /// Sets the wallpaper for the given [imageUrl] on the HOME_SCREEN location.
+  ///
+  /// Throws an [Exception] if the [imageUrl] file is null or if the result of
+  /// setting the wallpaper is null.
+  ///
+  /// Emits a [FullscreenErrorState] if an error occurs.
+  ///
+  /// Returns a [Future] that completes when the wallpaper is set.
+  Future<void> _setWallPaperEvent(
+    SetWallPaperEvent event,
+    Emitter<FullscreenState> emit,
+  ) async {
+    try {
+      int location = WallpaperManager.HOME_SCREEN;
+      File? file = await DefaultCacheManager().getSingleFile(event.imageUrl);
 
-    //   String result =
-    //       await WallpaperManager.setWallpaperFromFile(file, location).toString();
-    // } catch (e) {
-    //   // emit(FullscreenErrorState(errorMessage: e.toString()));
-    // }
+      if (file == null) {
+        throw Exception('File is null');
+      }
+
+      String result = await WallpaperManager.setWallpaperFromFile(
+        file.path,
+        location,
+      ).toString();
+
+      if (result == null) {
+        throw Exception('Result is null');
+      }
+      // emit(FullscreenLoadedState(
+      //   imageUrl: event.imageUrl,
+      // ));
+    } catch (e) {
+      emit(FullscreenErrorState(errorMessage: e.toString()));
+    }
   }
 }
