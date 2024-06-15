@@ -46,15 +46,21 @@ class _FullScreenState extends State<FullScreen> {
                       child: Image.network(widget.imageUrl),
                     ),
                   ),
-                  Container(
-                    height: 60,
-                    width: double.infinity,
-                    child: TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          'Set WallPaper',
-                          style: TextStyle(color: Colors.black),
-                        )),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        bottom: 30.0, left: 10, right: 10),
+                    child: Container(
+                      height: 40,
+                      width: double.infinity,
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.purple),
+                          onPressed: () {},
+                          child: Text(
+                            'Set WallPaper',
+                            style: TextStyle(color: Colors.white),
+                          )),
+                    ),
                   )
                 ],
               ),
