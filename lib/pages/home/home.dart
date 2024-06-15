@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:wallpaper_app/data/models/wallpaper_model.dart';
+import 'package:wallpaper_app/logic/Bloc/fullScreenBloc/fullscreen_bloc.dart';
 import 'package:wallpaper_app/logic/Bloc/homeBloc/home_bloc.dart';
 import 'package:wallpaper_app/pages/home/fullscreen.dart';
 
@@ -23,13 +24,14 @@ class _HomePageState extends State<HomePage> {
     homeBloc.add(HomeInitialEvent());
     super.initState();
   }
-
+final FullscreenBloc fullscreenBloc = FullscreenBloc();
   final HomeBloc homeBloc = HomeBloc();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocConsumer<HomeBloc, HomeState>(
         bloc: homeBloc,
+        
         listener: (context, state) {},
         builder: (context, state) {
           if (state is HomeLoadingState) {
@@ -71,7 +73,7 @@ class _HomePageState extends State<HomePage> {
                             // final WallpaperModel image = state.images[index].photos[0].src.tiny
                             return GestureDetector(
                               onTap: () {
-                                homeBloc.add(LoadFullScreenEvent(
+                                fullscreenBloc.add(FullscreenInitialEvent(
                                     imageUrl: state.images[index].src.large));
 
                                 // Get.to(FullScreen(

@@ -87,7 +87,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc() : super(HomeInitial()) {
     on<HomeInitialEvent>(_homeInitialEvent);
     on<LoadMoreEvent>(_loadMoreEvent);
-    on<LoadFullScreenEvent>(_loadFullScreenEvent);
+    // on<LoadFullScreenEvent>(_loadFullScreenEvent);
   }
 
   final String apiKey =
@@ -136,12 +136,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     }
   }
 
-  FutureOr<void> _loadFullScreenEvent(
-      LoadFullScreenEvent event, Emitter<HomeState> emit) {
-    log(LoadFullScreenEvent(imageUrl: event.imageUrl).toString());
-    Get.to(FullScreen(
-      imageUrl: event.imageUrl,
-    ));
-    emit(HomeLoadedState(images: []));
-  }
+  // FutureOr<void> _loadFullScreenEvent(
+  //     LoadFullScreenEvent event, Emitter<HomeState> emit) {
+ 
+  // }
 }

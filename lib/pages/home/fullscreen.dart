@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,6 +15,12 @@ class FullScreen extends StatefulWidget {
 
 class _FullScreenState extends State<FullScreen> {
   final FullscreenBloc fullscreenBloc = FullscreenBloc();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fullscreenBloc.add(FullscreenInitialEvent(imageUrl: widget.imageUrl));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +31,13 @@ class _FullScreenState extends State<FullScreen> {
           // TODO: implement listener
         },
         builder: (context, state) {
-          if (state is FullscreenLoadingState) {}
+          if (state is FullscreenLoadingState) {
+            log('fullscreen loading state ');
+          }
 
           if (state is FullscreenLoadedState) {
+            log('fullscreen loaded state ');
+
             return Container(
               child: Column(
                 children: [
@@ -49,7 +61,11 @@ class _FullScreenState extends State<FullScreen> {
             );
           }
 
-          if (state is FullscreenErrorState) {}
+          if (state is FullscreenErrorState) {
+            log('fullscreen error state ');
+          }
+          log('Complete error state state ');
+
           return Container();
         },
       ),
