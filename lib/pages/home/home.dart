@@ -47,31 +47,9 @@ final FullscreenBloc fullscreenBloc = FullscreenBloc();
           }
           if (state is HomeLoadedState) {
             log('home loaded state ');
-            showhomepagewidget(context, state);
-            
-          }
-          if (state is HomeErrorState) {
-            log('home error ');
+            final successState = state as HomeLoadedState;
 
             return Scaffold(
-              body: Center(
-                child: Text("Error"),
-              ),
-            );
-          }
-          return Container();
-        },
-      ),
-    );
-  }
-}
-
-
-showhomepagewidget(BuildContext context, HomeLoadedState state){
-            final successState = state as HomeLoadedState;
-final HomeBloc homeBloc = HomeBloc();
-final FullscreenBloc fullscreenBloc = FullscreenBloc();
-return Scaffold(
               appBar: AppBar(
                 title: Text("Wallpapers"),
                 centerTitle: true,
@@ -132,4 +110,21 @@ return Scaffold(
                 ],
               ),
             );
+          }
+          if (state is HomeErrorState) {
+            log('home error ');
+
+            return Scaffold(
+              body: Center(
+                child: Text("Error"),
+              ),
+            );
+          }
+          return Container();
+        },
+      ),
+    );
+  }
 }
+
+
