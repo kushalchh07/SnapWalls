@@ -4,6 +4,7 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:wallpaper_app/logic/Bloc/fullScreenBloc/fullscreen_bloc.dart';
 import 'package:wallpaper_app/logic/Bloc/homeBloc/home_bloc.dart';
 import 'package:wallpaper_app/pages/home/home.dart';
+import 'package:wallpaper_app/pages/splashScreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
       child: GetMaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(),
-        home: HomePage(),
+        home: SplashScreen(),
         debugShowCheckedModeBanner: false,
       ),
     );

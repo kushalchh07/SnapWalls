@@ -24,14 +24,14 @@ class _HomePageState extends State<HomePage> {
     homeBloc.add(HomeInitialEvent());
     super.initState();
   }
-final FullscreenBloc fullscreenBloc = FullscreenBloc();
+
+  final FullscreenBloc fullscreenBloc = FullscreenBloc();
   final HomeBloc homeBloc = HomeBloc();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocConsumer<HomeBloc, HomeState>(
         bloc: homeBloc,
-        
         listener: (context, state) {},
         builder: (context, state) {
           if (state is HomeLoadingState) {
@@ -47,8 +47,7 @@ final FullscreenBloc fullscreenBloc = FullscreenBloc();
           }
           if (state is HomeLoadedState) {
             log('home loaded state ');
-            showhomepagewidget(context, state);
-            
+            return showhomepagewidget(context, state);
           }
           if (state is HomeErrorState) {
             log('home error ');
@@ -66,70 +65,70 @@ final FullscreenBloc fullscreenBloc = FullscreenBloc();
   }
 }
 
+showhomepagewidget(BuildContext context, HomeLoadedState state) {
+  final successState = state as HomeLoadedState;
+  final HomeBloc homeBloc = HomeBloc();
+  final FullscreenBloc fullscreenBloc = FullscreenBloc();
+  return Scaffold(
+    appBar: AppBar(
+      title: Text(
+        "SnapWalls",
+        style: TextStyle(fontSize: 25, fontFamily: 'Poppins'),
+      ),
+      centerTitle: true,
+    ),
+    body: Column(
+      children: [
+        Expanded(
+          child: Container(
+            child: GridView.builder(
+                itemCount: successState.images.length,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    crossAxisSpacing: 2,
+                    childAspectRatio: 2 / 3,
+                    mainAxisSpacing: 2),
+                itemBuilder: (context, index) {
+                  log('${state.images[0].src.tiny}');
+                  // log('${state.images[0].photos![index].src!}');
 
-showhomepagewidget(BuildContext context, HomeLoadedState state){
-            final successState = state as HomeLoadedState;
-final HomeBloc homeBloc = HomeBloc();
-final FullscreenBloc fullscreenBloc = FullscreenBloc();
-return Scaffold(
-              appBar: AppBar(
-                title: Text("Wallpapers"),
-                centerTitle: true,
-              ),
-              body: Column(
-                children: [
-                  Expanded(
-                    child: Container(
-                      child: GridView.builder(
-                          itemCount: successState.images.length,
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 3,
-                                  crossAxisSpacing: 2,
-                                  childAspectRatio: 2 / 3,
-                                  mainAxisSpacing: 2),
-                          itemBuilder: (context, index) {
-                            log('${state.images[0].src.tiny}');
-                            // log('${state.images[0].photos![index].src!}');
-
-                            // final WallpaperModel image = state.images[index].photos[0].src.tiny
-                            return GestureDetector(
-                              onTap: () {
-                                fullscreenBloc.add(FullscreenInitialEvent(
-                                    imageUrl: state.images[index].src.large));
-
-                                // Get.to(FullScreen(
-                                //     imageUrl: state.images[index].src.large));
-                              },
-                              child: Container(
-                                child: Card(
-                                  child: Image.network(
-                                    state.images[index].src.tiny,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                            );
-                          }),
-                    ),
-                  ),
-                  GestureDetector(
+                  // final WallpaperModel image = state.images[index].photos[0].src.tiny
+                  return GestureDetector(
                     onTap: () {
-                      homeBloc.add(LoadMoreEvent());
-                      log('${state.images[0].src.tiny}');
+                      fullscreenBloc.add(FullscreenInitialEvent(
+                          imageUrl: state.images[index].src.large));
+
+                      // Get.to(FullScreen(
+                      //     imageUrl: state.images[index].src.large));
                     },
                     child: Container(
-                      height: 60,
-                      width: double.infinity,
-                      child: Center(
-                          child: Text(
-                        "Load More",
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                      )),
+                      child: Card(
+                        child: Image.network(
+                          state.images[index].src.tiny,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                     ),
-                  )
-                ],
-              ),
-            );
+                  );
+                }),
+          ),
+        ),
+        GestureDetector(
+          onTap: () {
+            homeBloc.add(LoadMoreEvent());
+            log('${state.images[0].src.tiny}');
+          },
+          child: Container(
+            height: 60,
+            width: double.infinity,
+            child: Center(
+                child: Text(
+              "Load More",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            )),
+          ),
+        )
+      ],
+    ),
+  );
 }
