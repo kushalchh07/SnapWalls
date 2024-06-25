@@ -64,6 +64,7 @@ class FullscreenBloc extends Bloc<FullscreenEvent, FullscreenState> {
       }
 
       emit(SetWallPaperState());
+
     } catch (e) {
       emit(FullscreenErrorState(errorMessage: e.toString()));
     }

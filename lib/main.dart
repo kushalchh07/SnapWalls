@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: GetMaterialApp(
-        title: 'Flutter Demo',
+        title: 'Snap Walls',
         theme: ThemeData(),
         home: SplashScreen(),
         debugShowCheckedModeBanner: false,

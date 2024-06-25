@@ -89,7 +89,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   final String apiKey =
-      'ub1jVSB2BzOMVBpEnRCObkK3sE7YQ7tDvWNxxy1Wb5uSjgCPdVi3GwK2'; 
+      'ub1jVSB2BzOMVBpEnRCObkK3sE7YQ7tDvWNxxy1Wb5uSjgCPdVi3GwK2';
   int page = 1;
 
   FutureOr<void> _homeInitialEvent(
@@ -124,6 +124,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         currentImages.addAll(wallpaperModel.photos);
 
         emit(HomeLoadedState(images: currentImages));
+
+        // log(response.body);
         page++;
       } else {
         emit(HomeErrorState(errorMessage: 'Failed to fetch wallpapers'));
