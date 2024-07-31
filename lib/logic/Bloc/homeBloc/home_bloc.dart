@@ -55,7 +55,8 @@ part 'home_state.dart';
 //     var client = http.Client();
 //     // List<Photo> wallpapers = [];
 //     try {
-//       // emit(HomeLoadingState());
+//       emit(HomeLoadingState());
+//       log("Load More Event Registered");
 //       var page = 1;
 //       var response = await client.get(
 //           Uri.parse('https://api.pexels.com/v1/curated?per_page=80&page=' +
@@ -111,7 +112,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           headers: {
             'Authorization': apiKey,
           });
-
+      log("$page");
       if (response.statusCode == 200) {
         var jsonResponse = jsonDecode(response.body) as Map<String, dynamic>;
         WallpaperModel wallpaperModel = WallpaperModel.fromJson(jsonResponse);

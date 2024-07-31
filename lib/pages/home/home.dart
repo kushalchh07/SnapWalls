@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:wallpaper_app/constants/color/colors.dart';
 import 'package:wallpaper_app/data/models/wallpaper_model.dart';
 import 'package:wallpaper_app/logic/Bloc/fullScreenBloc/fullscreen_bloc.dart';
 import 'package:wallpaper_app/logic/Bloc/homeBloc/home_bloc.dart';
@@ -30,6 +31,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: appBackgroundColor,
       body: BlocConsumer<HomeBloc, HomeState>(
         bloc: homeBloc,
         listener: (context, state) {},
@@ -76,7 +78,9 @@ showhomepagewidget(BuildContext context, HomeLoadedState state) {
         style: TextStyle(fontSize: 25, fontFamily: 'Poppins'),
       ),
       centerTitle: true,
+      backgroundColor: appBackgroundColor,
     ),
+    backgroundColor: appBackgroundColor,
     body: Column(
       children: [
         Expanded(
@@ -121,6 +125,7 @@ showhomepagewidget(BuildContext context, HomeLoadedState state) {
           child: Container(
             height: 60,
             width: double.infinity,
+            decoration: BoxDecoration(border: Border.all(color: buttonColor)),
             child: Center(
                 child: Text(
               "Load More",
