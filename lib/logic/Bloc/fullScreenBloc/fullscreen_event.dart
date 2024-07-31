@@ -2,7 +2,7 @@ part of 'fullscreen_bloc.dart';
 
 @immutable
 abstract class FullscreenEvent {}
-
+class FullScreenLoadingEvent extends FullscreenEvent{}
 class FullscreenInitialEvent extends FullscreenEvent {
   final String imageUrl;
   FullscreenInitialEvent({required this.imageUrl});

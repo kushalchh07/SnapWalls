@@ -21,6 +21,7 @@ class FullscreenBloc extends Bloc<FullscreenEvent, FullscreenState> {
   FutureOr<void> _fullscreenInitialEvent(
       FullscreenInitialEvent event, Emitter<FullscreenState> emit) {
     //  log(LoadFullScreenEvent(imageUrl: event.imageUrl).toString());
+    emit(FullscreenLoadingState());
     try {
       Get.to(() => FullScreen(
             imageUrl: event.imageUrl,
@@ -64,7 +65,6 @@ class FullscreenBloc extends Bloc<FullscreenEvent, FullscreenState> {
       }
 
       emit(SetWallPaperState());
-
     } catch (e) {
       emit(FullscreenErrorState(errorMessage: e.toString()));
     }
