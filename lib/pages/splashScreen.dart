@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:wallpaper_app/constants/color/colors.dart';
 import 'package:wallpaper_app/pages/home/home.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -31,18 +32,26 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: SizedBox(
-          // color: Colors.amber,
-          width: Get.width,
-          height: Get.height,
-          child: Image.asset(
-            'assets/Icons/snapWalls_logo.png',
-            fit: BoxFit.cover,
-            scale: 2,
+      backgroundColor: appBackgroundColor,
+      body: Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Center(
+              child: SizedBox(
+                height: Get.height * 0.4,
+                // color: Colors.amber,
 
-            // width: Get.width,
-          ),
+                child: Image.asset(
+                  'assets/Icons/snapWalls_logo.png',
+                  fit: BoxFit.cover,
+                  // scale: 2,
+
+                  // width: Get.width,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
